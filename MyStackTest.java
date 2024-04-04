@@ -7,7 +7,8 @@ public class MyStackTest {
         stack.push("Roman");
         stack.push("julia");
 
-       stack.pop();
-       System.out.println(stack);
+       stack.clear();
+        System.out.println(stack);
+
     }
 }

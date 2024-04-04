@@ -5,8 +5,8 @@ public class MyQueueTest {
         MyQueue<Integer>myQueue = new MyQueue<>();
         myQueue.add(5);
         myQueue.add(6);
-        Integer peek = myQueue.peek();
-        System.out.println(peek);
+        System.out.println(myQueue);
+        myQueue.clear();
         System.out.println(myQueue);
 
     }

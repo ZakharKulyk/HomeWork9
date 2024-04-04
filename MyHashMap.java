@@ -4,27 +4,27 @@ package ua.goit.polymorpism.Module9.HomeWork9;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class MyHashMap {
+public class MyHashMap<T,T1> {
 
     private static final int DEFAULT_CAPACITY = 16;
     private Node[] table;
     private int size;
 
     public MyHashMap() {
-        table = new Node[DEFAULT_CAPACITY];
-        size = 0;
+        this.table = new Node[this.DEFAULT_CAPACITY];
+        this.size = 0;
     }
 
-    public void put(Object key, Object value) {
+    public void put(T key, T1 value) {
         if (key == null)
             return;
 
-        int hash = key.hashCode() % table.length;
-        if (table[hash] == null) {
-            table[hash] = new Node(key, value);
-            size++;
+        int hash = key.hashCode() % this.table.length;
+        if (this.table[hash] == null) {
+            this.table[hash] = new Node(key, value);
+            this.size++;
         } else {
-            Node currentNode = table[hash];
+            Node currentNode = this.table[hash];
             while (currentNode != null) {
                 if (currentNode.key.equals(key)) {
                     currentNode.value = value;
@@ -32,7 +32,7 @@ public class MyHashMap {
                 }
                 if (currentNode.next == null) {
                     currentNode.next = new Node(key, value);
-                    size++;
+                    this.size++;
                     return;
                 }
                 currentNode = currentNode.next;
@@ -44,18 +44,18 @@ public class MyHashMap {
         if (key == null)
             return;
 
-        int hash = key.hashCode() % table.length;
-        if (table[hash] != null) {
+        int hash = key.hashCode() % this.table.length;
+        if (this.table[hash] != null) {
             Node prevNode = null;
-            Node currentNode = table[hash];
+            Node currentNode = this.table[hash];
             while (currentNode != null) {
                 if (currentNode.key.equals(key)) {
                     if (prevNode == null) {
-                        table[hash] = currentNode.next;
+                        this.table[hash] = currentNode.next;
                     } else {
                         prevNode.next = currentNode.next;
                     }
-                    size--;
+                    this.size--;
                     return;
                 }
                 prevNode = currentNode;
@@ -65,20 +65,20 @@ public class MyHashMap {
     }
 
     public void clear() {
-        Arrays.fill(table, null);
-        size = 0;
+        Arrays.fill(this.table, null);
+        this.size = 0;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     public Object get(Object key) {
         if (key == null)
             return null;
 
-        int hash = key.hashCode() % table.length;
-        Node currentNode = table[hash];
+        int hash = key.hashCode() % this.table.length;
+        Node currentNode = this.table[hash];
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
                 return currentNode.value;
@@ -99,4 +99,19 @@ public class MyHashMap {
             next = null;
         }
     }
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("{");
+        for (Node node : this.table) {
+            while (node != null) {
+                stringBuilder.append(node.key).append("=").append(node.value).append(", ");
+                node = node.next;
+            }
+        }
+        if (size > 0) {
+            stringBuilder.setLength(stringBuilder.length() - 2);
+        }
+        stringBuilder.append("}");
+        return stringBuilder.toString();
+    }
+
 }

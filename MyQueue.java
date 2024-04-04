@@ -1,5 +1,6 @@
 package ua.goit.polymorpism.Module9.HomeWork9;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import java.util.Arrays;
@@ -10,45 +11,47 @@ public class MyQueue<T> {
     private int head = 0;
 
     public MyQueue() {
-        arr = (T[]) new Object[10];
+        this.arr = (T[]) new Object[10];
     }
 
     public void add(T value) {
-        if (size == arr.length) {
-            arr = Arrays.copyOf(arr, arr.length * 2);
+        if (this.size == this.arr.length) {
+            this.arr = Arrays.copyOf(this.arr, this.arr.length * 2);
         }
-        arr[size] = value;
-        size++;
+        this.arr[this.size] = value;
+        this.size++;
     }
 
     public void clear() {
-        size = 0;
+        Arrays.fill(this.arr, null);
+        this.size=0;
+        this.head=0;
     }
 
     public T peek(){
-        if (size == 0) {
-            return null; // или можно выбросить исключение, если требуется
+        if (this.size == 0) {
+            return null;
         }
-        return arr[head];
+        return this.arr[this.head];
     }
 
     public T poll() {
-        if (size == 0) {
-            return null; // или можно выбросить исключение, если требуется
+        if (this.size == 0) {
+            return null;
         }
-        T element = arr[head];
-        System.arraycopy(arr, 1, arr, 0, size - 1);
-        size--;
+        T element = this.arr[this.head];
+        System.arraycopy(this.arr, 1, this.arr, 0, this.size - 1);
+        this.size--;
         return element;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     @Override
     public String toString() {
-        T[] copy = Arrays.copyOfRange(arr, head, head + size);
+        T[] copy = Arrays.copyOfRange(this.arr, this.head, this.head + this.size);
         return Arrays.toString(copy);
     }
 }

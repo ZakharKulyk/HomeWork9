@@ -5,55 +5,61 @@ import java.util.Arrays;
 import java.util.Arrays;
 
 public class MyStack<T> {
-    private static int DEFAULTSIZE = 10;
+    private final int DEFAULT_SIZE = 10;
     private T[] stack;
     private int size = 0;
 
     public MyStack() {
-        stack = (T[]) new Object[DEFAULTSIZE];
+        stack = (T[]) new Object[DEFAULT_SIZE];
     }
 
     public void push(T value) {
-        if (size == stack.length) {
-            stack = Arrays.copyOf(stack, size * 2);
+        if (this.size == this.stack.length) {
+            this.stack = Arrays.copyOf(this.stack, this.size * 2);
         }
-        stack[size] = value;
-        size++;
+        this.stack[this.size] = value;
+        this.size++;
     }
 
-    public void remove(int index) {
-        if (index < 0 || index >= size) {
+    public T remove(int index) {
+        if (index < 0 || index >=this.size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        System.arraycopy(stack, index + 1, stack, index, size - index - 1);
-        size--;
+        T value = stack[index];
+        System.arraycopy(this.stack, index + 1, this.stack, index, this.size - index - 1);
+        this.size--;
+        return value;
+
     }
 
     public void clear() {
+        Arrays.fill(stack, null);
         size = 0;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     public T peek() {
-        if (size == 0) {
-            return null; // or throw new EmptyStackException();
+        if (this.size == 0) {
+            return null;
         }
-        return stack[size - 1];
+        return this.stack[this.size - 1];
     }
 
-    public void pop() {
-        if (size == 0) {
+    public T pop() {
+        if (this.size == 0) {
             throw new IllegalStateException("Stack is empty");
         }
-        stack[size - 1] = null;
-        size--;
+        T value = this.stack[this.size-1];
+        this.stack[this.size - 1] = null;
+        this.size--;
+        return value;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.copyOfRange(stack, 0, size));
+        return Arrays.toString(Arrays.copyOfRange(this.stack, 0, this.size));
     }
 }

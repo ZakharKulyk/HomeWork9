@@ -1,52 +1,51 @@
 package ua.goit.polymorpism.Module9.HomeWork9;
 
-public class MyLinkedList {
-
-    private Node head;
-    private Node tail;
+public class MyLinkedList<T> {
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
     public MyLinkedList() {
-        head = null;
-        tail = null;
-        size = 0;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
-    public void add(Object value) {
-        Node newNode = new Node(value);
-        if (head == null) {
-            head = newNode;
-            tail = newNode;
+    public void add(T value) {
+        Node<T> newNode = new Node<>(value);
+        if (this.head == null) {
+            this.head = newNode;
+            this.tail = newNode;
         } else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
+            this.tail.next = newNode;
+            newNode.prev = this.tail;
+            this.tail = newNode;
         }
-        size++;
+        this.size++;
     }
 
-    public void remove(int index) {
-        if (index < 0 || index >= size)
+    public T remove(int index) {
+        if (index < 0 || index >= this.size)
             throw new IndexOutOfBoundsException();
 
-        Node current = head;
+        Node<T> current = this.head;
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
 
         if (current.prev == null) {
-            head = current.next;
+            this.head = current.next;
         } else {
             current.prev.next = current.next;
         }
 
         if (current.next == null) {
-            tail = current.prev;
+            this.tail = current.prev;
         } else {
             current.next.prev = current.prev;
         }
-
-        size--;
+        this.size--;
+        return current.data;
     }
 
     public void clear() {
@@ -59,28 +58,43 @@ public class MyLinkedList {
         return size;
     }
 
-    public Object get(int index) {
-        if (index < 0 || index >= size)
+    public T get(int index) {
+        if (index < 0 || index >= this.size)
             throw new IndexOutOfBoundsException();
 
-        Node current = head;
+        Node<T> current = this.head;
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
         return current.data;
     }
 
-    private static class Node {
-        Object data;
-        Node next;
-        Node prev;
+    private static class Node<T> {
+        T data;
+        Node<T> next;
+        Node<T> prev;
 
-        Node(Object data) {
+        Node(T data) {
             this.data = data;
             this.next = null;
             this.prev = null;
         }
     }
-}
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
+        Node<T> current = this.head;
+        while (current != null) {
+            stringBuilder.append(current.data);
+            if (current.next != null) {
+                stringBuilder.append(',');
+            }
+            current = current.next;
+        }
+        stringBuilder.append(']');
+        return stringBuilder.toString();
+    }
+}
 

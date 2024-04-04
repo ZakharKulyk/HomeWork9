@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class MyArrayList<T> {
     private T elements[];
     private  int size;
-    private int DEFAULTSIZE = 10;
+    private final int DEFAULT_SIZE = 10;
     public MyArrayList(){
-        elements = (T[]) new Object[DEFAULTSIZE];
+        this.elements = (T[]) new Object[DEFAULT_SIZE];
     }
 
     public T[] getElements() {
@@ -19,40 +19,41 @@ public class MyArrayList<T> {
     }
 
     public void add(T value) {
-        if (size == elements.length) {
+        if (this.size == elements.length) {
             resize();
         }
-        elements[size] = value;
+        this.elements[size] = value;
         size++;
     }
-    public void remove(int index){
+    public T remove(int index){
+        T temp = null;
         for(int i =index; i<size-1; i++)
         {
-            elements[index] = elements[i+1];
+            temp = elements[index];
+            this.elements[index] = elements[i+1];
 
         }
-        size--;
+        this.size--;
+        return  temp;
+
     }
     public T get(int index){
-        T temp =(T) elements[index];
-        return  temp;
+        return  this.elements[index];
     }
 
     public void clear()
     {
-        size = elements.length;
-        for(int i =0; i<elements.length; i++)
-        {
-            size--;
-        }
+        Arrays.setAll(this.elements, i->0);
+        Arrays.setAll(this.elements, i->null);
+        this.size = 0;
     }
     public int size()
     {
-      return  size;
+      return  this.size;
     }
 
     public void resize(){
-        elements = (T[]) new Object[DEFAULTSIZE*2];
+        this.elements = (T[]) new Object[DEFAULT_SIZE*2];
     }
 
     @Override
