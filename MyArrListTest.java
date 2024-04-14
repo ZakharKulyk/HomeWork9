@@ -4,20 +4,15 @@ import java.util.Arrays;
 
 public class MyArrListTest {
     public static void main(String[] args) {
-        MyArrayList<Integer> myArrayList = new MyArrayList<>();
-
-
-        for (int i = 0; i < 10; i++) {
-            myArrayList.add(i);
+        MyArrayList<Integer>list = new MyArrayList<>();
+        for(int i=0; i <10; i++){
+            list.add(i);
         }
-        System.out.println(myArrayList);
-        myArrayList.clear();
-        System.out.println(myArrayList);
-        Integer integer = myArrayList.get(0);
-        Integer remove = myArrayList.remove(1);
-        System.out.println(integer);
-        System.out.println(remove);
+        System.out.println(list);
+        Integer remove = list.remove(7);
+        System.out.println(list);
+        Integer remove1 = list.remove(8);
 
-
+        System.out.println(list);
     }
 }
