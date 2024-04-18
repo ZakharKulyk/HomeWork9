@@ -49,13 +49,13 @@ public class MyLinkedList<T> {
     }
 
     public void clear() {
-        head = null;
-        tail = null;
-        size = 0;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     public T get(int index) {

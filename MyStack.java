@@ -5,61 +5,64 @@ import java.util.Arrays;
 import java.util.Arrays;
 
 public class MyStack<T> {
-    private final int DEFAULT_SIZE = 10;
+
     private T[] stack;
-    private int size = 0;
+
 
     public MyStack() {
-        stack = (T[]) new Object[DEFAULT_SIZE];
+        stack = (T[]) new Object[0];
     }
 
     public void push(T value) {
-        if (this.size == this.stack.length) {
-            this.stack = Arrays.copyOf(this.stack, this.size * 2);
-        }
-        this.stack[this.size] = value;
-        this.size++;
+        int len = this.stack.length;
+        this.stack = Arrays.copyOf(this.stack, len + 1);
+        this.stack[len] = value;
     }
 
-    public T remove(int index) {
-        if (index < 0 || index >=this.size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+    public void remove(int index) {
+        if ((index >= this.stack.length) || (index < 0)) {
+            throw new IndexOutOfBoundsException();
         }
-        T value = stack[index];
-        System.arraycopy(this.stack, index + 1, this.stack, index, this.size - index - 1);
-        this.size--;
-        return value;
+        int indexForNewArr = 0;
+        T[] tempArr = (T[]) new Object[this.stack.length - 1];
+        for (int i = 0; i < this.stack.length; i++) {
+            if (i == index) {
+                continue;
+            }
+            tempArr[indexForNewArr++] = this.stack[i];
+        }
+        this.stack = Arrays.copyOf(tempArr, tempArr.length);
 
     }
 
     public void clear() {
-        Arrays.fill(stack, null);
-        size = 0;
+        this.stack = (T[]) new Object[0];
     }
 
     public int size() {
-        return this.size;
+        return this.stack.length;
     }
 
     public T peek() {
-        if (this.size == 0) {
-            return null;
+        if (this.stack.length == 0) {
+            throw new IndexOutOfBoundsException();
         }
-        return this.stack[this.size - 1];
+        return this.stack[this.stack.length - 1];
     }
 
     public T pop() {
-        if (this.size == 0) {
-            throw new IllegalStateException("Stack is empty");
+        T deletedValue;
+        if (this.stack.length == 0) {
+            throw new IndexOutOfBoundsException();
         }
-        T value = this.stack[this.size-1];
-        this.stack[this.size - 1] = null;
-        this.size--;
-        return value;
+        deletedValue = this.stack[this.stack.length - 1];
+        this.stack = Arrays.copyOfRange(this.stack, 0, this.stack.length - 1);
+        return deletedValue;
+
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.copyOfRange(this.stack, 0, this.size));
+        return Arrays.toString(Arrays.copyOfRange(this.stack, 0, this.stack.length));
     }
 }

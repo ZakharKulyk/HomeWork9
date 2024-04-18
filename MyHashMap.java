@@ -4,22 +4,25 @@ package ua.goit.polymorpism.Module9.HomeWork9;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class MyHashMap<T,T1> {
+public class MyHashMap<T, T1> {
 
     private static final int DEFAULT_CAPACITY = 16;
     private Node[] table;
     private int size;
 
     public MyHashMap() {
-        this.table = new Node[this.DEFAULT_CAPACITY];
+        this.table = new Node[16];
         this.size = 0;
     }
 
     public void put(T key, T1 value) {
-        if (key == null)
-            return;
+        if (key == null) {
+            throw new NullPointerException();
+        }
 
-        int hash = key.hashCode() % this.table.length;
+
+        int hash = Math.abs(key.hashCode()) % table.length;
+
         if (this.table[hash] == null) {
             this.table[hash] = new Node(key, value);
             this.size++;
@@ -41,10 +44,11 @@ public class MyHashMap<T,T1> {
     }
 
     public void remove(Object key) {
-        if (key == null)
-            return;
+        if (key == null) {
+            throw new NullPointerException();
+        }
 
-        int hash = key.hashCode() % this.table.length;
+        int hash = Math.abs(key.hashCode()) % table.length;
         if (this.table[hash] != null) {
             Node prevNode = null;
             Node currentNode = this.table[hash];
@@ -65,7 +69,7 @@ public class MyHashMap<T,T1> {
     }
 
     public void clear() {
-        Arrays.fill(this.table, null);
+        this.table = new Node[0];
         this.size = 0;
     }
 
@@ -75,9 +79,9 @@ public class MyHashMap<T,T1> {
 
     public Object get(Object key) {
         if (key == null)
-            return null;
+            return new NullPointerException();
 
-        int hash = key.hashCode() % this.table.length;
+        int hash = Math.abs(key.hashCode()) % this.table.length;;
         Node currentNode = this.table[hash];
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
@@ -99,6 +103,7 @@ public class MyHashMap<T,T1> {
             next = null;
         }
     }
+
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("{");
         for (Node node : this.table) {

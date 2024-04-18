@@ -1,57 +1,51 @@
 package ua.goit.polymorpism.Module9.HomeWork9;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import java.util.Arrays;
+
+
 
 public class MyQueue<T> {
-    private int size = 0;
+
     private T arr[];
     private int head = 0;
 
     public MyQueue() {
-        this.arr = (T[]) new Object[10];
+        this.arr = (T[]) new Object[0];
     }
 
     public void add(T value) {
-        if (this.size == this.arr.length) {
-            this.arr = Arrays.copyOf(this.arr, this.arr.length * 2);
-        }
-        this.arr[this.size] = value;
-        this.size++;
+      int len = this.arr.length;
+      this.arr = Arrays.copyOf(this.arr, len+1);
+      this.arr[len] = value;
     }
 
     public void clear() {
-        Arrays.fill(this.arr, null);
-        this.size=0;
-        this.head=0;
+        this.arr =(T[]) new Object[0];
     }
 
     public T peek(){
-        if (this.size == 0) {
-            return null;
+        if (this.arr.length==0) {
+            throw new NullPointerException();
         }
         return this.arr[this.head];
     }
 
     public T poll() {
-        if (this.size == 0) {
-            return null;
+        if (this.arr.length==0) {
+            throw  new NullPointerException();
         }
         T element = this.arr[this.head];
-        System.arraycopy(this.arr, 1, this.arr, 0, this.size - 1);
-        this.size--;
+       this.arr = Arrays.copyOfRange(this.arr, 1, this.arr.length);
         return element;
     }
 
     public int size() {
-        return this.size;
+        return this.arr.length;
     }
 
     @Override
     public String toString() {
-        T[] copy = Arrays.copyOfRange(this.arr, this.head, this.head + this.size);
-        return Arrays.toString(copy);
+        return Arrays.toString(Arrays.copyOf(this.arr, this.arr.length));
     }
 }

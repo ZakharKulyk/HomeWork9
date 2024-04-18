@@ -4,10 +4,10 @@ public class MyQueueTest {
     public static void main(String[] args) {
         MyQueue<Integer>myQueue = new MyQueue<>();
         myQueue.add(5);
-        myQueue.add(6);
+        Integer poll = myQueue.poll();
         System.out.println(myQueue);
-        myQueue.clear();
-        System.out.println(myQueue);
+        System.out.println(poll);
+
 
     }
 }

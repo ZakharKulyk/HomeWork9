@@ -4,15 +4,35 @@ import java.util.Arrays;
 
 public class MyArrListTest {
     public static void main(String[] args) {
-        MyArrayList<Integer>list = new MyArrayList<>();
-        for(int i=0; i <10; i++){
-            list.add(i);
-        }
-        System.out.println(list);
-        Integer remove = list.remove(7);
-        System.out.println(list);
-        Integer remove1 = list.remove(8);
+        MyArrayList list = new MyArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
 
-        System.out.println(list);
+        // Выводим список
+        System.out.println("Список после добавления элементов: " + list);
+
+        // Проверяем размер списка
+        System.out.println("Размер списка: " + list.size());
+
+        // Получаем элемент по индексу
+        System.out.println("Элемент с индексом 2: " + list.get(2));
+
+        // Удаляем элемент по индексу
+        System.out.println("Удаленный элемент с индексом 2: " + list.remove(2));
+
+        // Выводим список после удаления элемента
+        System.out.println("Список после удаления элемента: " + list);
+
+        // Проверяем размер списка после удаления элемента
+        System.out.println("Размер списка после удаления элемента: " + list.size());
+
+        // Очищаем список
+        list.clear();
+        System.out.println("Список после очистки: " + list);
+        System.out.println("Размер списка после очистки: " + list.size());
+
     }
 }
