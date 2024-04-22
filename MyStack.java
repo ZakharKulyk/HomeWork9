@@ -10,7 +10,7 @@ public class MyStack<T> {
 
 
     public MyStack() {
-        stack = (T[]) new Object[0];
+        this.stack = (T[]) new Object[0];
     }
 
     public void push(T value) {

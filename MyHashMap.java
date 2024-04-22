@@ -1,27 +1,27 @@
 package ua.goit.polymorpism.Module9.HomeWork9;
 
 
-import java.util.Arrays;
-import java.util.Objects;
 
-public class MyHashMap<T, T1> {
+
+public class MyHashMap<K, V> {
 
     private static final int DEFAULT_CAPACITY = 16;
     private Node[] table;
     private int size;
 
     public MyHashMap() {
-        this.table = new Node[16];
+        this.table = new Node[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
-    public void put(T key, T1 value) {
-        if (key == null) {
-            throw new NullPointerException();
+    public void put(K key, V value) {
+        int hash;
+        if(key == null){
+            hash = 0;
+        }else{
+            hash = Math.abs(key.hashCode()) % table.length;
         }
 
-
-        int hash = Math.abs(key.hashCode()) % table.length;
 
         if (this.table[hash] == null) {
             this.table[hash] = new Node(key, value);
@@ -29,7 +29,7 @@ public class MyHashMap<T, T1> {
         } else {
             Node currentNode = this.table[hash];
             while (currentNode != null) {
-                if (currentNode.key.equals(key)) {
+                if ((currentNode.key == null && key == null) || (currentNode.key != null && currentNode.key.equals(key))) {
                     currentNode.value = value;
                     return;
                 }
@@ -43,17 +43,18 @@ public class MyHashMap<T, T1> {
         }
     }
 
-    public void remove(Object key) {
+    public void remove(K key) {
+        int hash;
         if (key == null) {
-            throw new NullPointerException();
+            hash = 0;
+        } else {
+            hash = Math.abs(key.hashCode()) % table.length;
         }
-
-        int hash = Math.abs(key.hashCode()) % table.length;
         if (this.table[hash] != null) {
             Node prevNode = null;
             Node currentNode = this.table[hash];
             while (currentNode != null) {
-                if (currentNode.key.equals(key)) {
+                if ((currentNode.key == null && key == null) || (currentNode.key != null && currentNode.key.equals(key))) {
                     if (prevNode == null) {
                         this.table[hash] = currentNode.next;
                     } else {
@@ -77,14 +78,16 @@ public class MyHashMap<T, T1> {
         return this.size;
     }
 
-    public Object get(Object key) {
-        if (key == null)
-            return new NullPointerException();
-
-        int hash = Math.abs(key.hashCode()) % this.table.length;;
+    public Object get(K key) {
+        int hash;
+        if (key == null){
+            hash = 0;
+        }else {
+            hash = Math.abs(key.hashCode()) % this.table.length;
+        }
         Node currentNode = this.table[hash];
         while (currentNode != null) {
-            if (currentNode.key.equals(key)) {
+            if ((currentNode.key == null && key == null) || (currentNode.key != null && currentNode.key.equals(key))) {
                 return currentNode.value;
             }
             currentNode = currentNode.next;
